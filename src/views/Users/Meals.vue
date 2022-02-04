@@ -7,14 +7,14 @@
             <b-input
               class="mr-3"
               type="search"
-              placeholder="Search Items By Name"
+              placeholder="Search By Restaurant Name"
               v-model="searchByName"
               @keyup.enter="getAllItems"
             ></b-input>
             <b-input
               class="mr-3"
               type="search"
-              placeholder="Search Items By title"
+              placeholder="Search By Foot title"
               v-model="searchByTitle"
               @keyup.enter="getAllItems"
             ></b-input>
@@ -309,7 +309,7 @@
                   </b-td>
                     <b-td>
                     <router-link
-                      :to="{ name: 'dashboard.category', params: { id: item.id } }"
+                      :to="{ name: 'dashboard.extraMeal', params: { id: item.id } }"
                     >
                       extra
                     </router-link>
