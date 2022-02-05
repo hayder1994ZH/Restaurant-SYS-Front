@@ -31,7 +31,7 @@
     >
       <template slot="responsiveRight">
         <ul class="navbar-nav ml-auto navbar-list">
-          <li class="nav-item nav-icon">
+          <!-- <li class="nav-item nav-icon">
             <div class="iq-search-bar">
               <form action="#" class="searchbox">
                 <input
@@ -47,10 +47,9 @@
                 <a class="search-audio" href="#"
                   ><i class="las la-microphone text-black"></i
                 ></a>
-                <!-- <GlobalSearch :search="globalSearch" @closeSearch="removeClass "/> -->
               </form>
             </div>
-          </li>
+          </li> -->
           <!-- <li class="nav-item nav-icon search-content">
               <a href="#" class="search-toggle iq-waves-effect text-gray rounded"><span class="ripple rippleEffect"></span>
                 <i class="ri-search-line text-black"></i>

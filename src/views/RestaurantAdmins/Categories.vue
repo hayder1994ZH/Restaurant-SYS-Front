@@ -243,7 +243,7 @@
                   </b-td> 
                     <b-td>
                     <router-link
-                      :to="{ name: 'dashboard.category', params: { id: item.id } }"
+                      :to="{ name: 'dashboard.admins.category', params: { id: item.id } }"
                     >
                       languages
                     </router-link>
@@ -318,6 +318,7 @@ export default {
   name: 'AgeRange',
   components: { Loader },
   created () {
+    this.checkRule()
     this.getAllItems()
     this.getLanguages()
     this.getRestaurants()
@@ -338,6 +339,8 @@ export default {
       resturantModels: [],
       languages: [],
       searchByName: '',
+      checkUserUid: '',
+      checkUserRule: '',
       searchByTitle: '',
       loader: false,
       perPage: 10,
@@ -362,6 +365,17 @@ export default {
     }
   },
   methods: {
+    checkRule(){
+      this.checkUserRule = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).user_name
+      this.checkUserUid = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).uid
+      if(this.checkUserRule === 'owner' && this.checkUserUid === null){
+        this.$router.push({ name: 'dashboard.home-1' })
+      }
+    },
     deletePopup (id) {
       this.id = id
     },

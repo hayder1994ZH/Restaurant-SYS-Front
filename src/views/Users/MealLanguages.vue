@@ -246,6 +246,7 @@ export default {
   name: 'AgeRange',
   components: { Loader },
   created () {
+    this.checkRule()
     this.getLanguages()
     this.getAllItems()
   },
@@ -274,9 +275,22 @@ export default {
       formEditlang: [],
       items: [],
       id: null,
+      checkUserRule: null,
+      checkUserUid: null,
     }
   },
   methods: {
+    checkRule(){
+      this.checkUserRule = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).user_name
+      this.checkUserUid = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).uid
+      if(this.checkUserRule === 'admin' && this.checkUserUid !== null){
+        this.$router.push({ name: 'dashboard.home-1' })
+      }
+    },
     deletePopup (id) {
       this.id = id
     },

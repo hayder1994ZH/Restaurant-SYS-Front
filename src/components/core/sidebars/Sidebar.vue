@@ -4,7 +4,7 @@
       <router-link :to="{ name: 'dashboard.home-1' }">
         <!-- <img :src="logo" v-if="onlyLogo" class="img-fluid" alt="logo" /> -->
         <div v-if="onlyLogoText" class="logo-title">
-          <span class="text-primary text-uppercase">VODU</span>
+          <span class="text-primary text-uppercase">Restaurant</span>
         </div>
       </router-link>
       <!-- <div class="iq-menu-bt-sidebar">

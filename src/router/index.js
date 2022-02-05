@@ -7,6 +7,7 @@ const AuthLayout = () => import('../layouts/AuthLayouts/AuthLayout')
 /* Dashboards View */
 const Dashboard1 = () => import('../views/Dashboards/Dashboard1')
 const Reels = () => import('../views/Reels/Reels')
+//owner route
 const Users = () => import('../views/Users/Users')//owner
 const Categories = () => import('../views/Users/Categories')//owner
 const Category = () => import('../views/Users/Category')//owner
@@ -15,6 +16,15 @@ const Meals = () => import('../views/Users/Meals')//owner
 const MealLanguages = () => import('../views/Users/MealLanguages')//owner
 const ExtraMeal = () => import('../views/Users/ExtraMeal')//owner
 const QR = () => import('../views/Users/QRcodeGenerated')//owner
+//end owner Route
+//admin Route
+const CategoriesAdmins = () => import('../views/RestaurantAdmins/Categories')
+const CategoryAdmins = () => import('../views/RestaurantAdmins/Category')
+const MealsAdmins = () => import('../views/RestaurantAdmins/Meals') 
+const MealLanguagesAdmins = () => import('../views/RestaurantAdmins/MealLanguages')
+const ExtraMealAdmins = () => import('../views/RestaurantAdmins/ExtraMeal')
+const QRAdmins = () => import('../views/RestaurantAdmins/QRcodeGenerated')
+//end admins route
 const Channels = () => import('../views/Channels/Channels')
 const Category1 = () => import('../views/Category/Categories')
 const SubCategory = () => import('../views/Category/Sub-Categories')
@@ -180,54 +190,94 @@ const childRoutes = (prop) => [
     meta: { auth: true, name: 'Channels' },
     component: Channels
   },
+  //owner
   {
     path: 'users',
     name: prop + '.users',
     meta: { auth: true, name: 'Users' },
-    component: Users//
+    component: Users
   },
   {
-    path: 'category/:id',
+    path: 'admins/categories',
+    name: prop + '.categories',
+    meta: { auth: true, name: 'Categories' },
+    component: Categories
+  },
+  {
+    path: 'admins/category/:id',
     name: prop + '.category',
     meta: { auth: true, name: 'Category' },
     component: Category
   },
   {
-    path: 'restaurant',
+    path: 'admins/restaurant',
     name: prop + '.restaurant',
     meta: { auth: true, name: 'Restaurants' },
     component: Restaurants
   },
   {
-    path: 'meals',
+    path: 'admins/meals',
     name: prop + '.meals',
     meta: { auth: true, name: 'Meals' },
     component: Meals
   },
   {
-    path: 'meal/:id',
+    path: 'admins/meal/:id',
     name: prop + '.meal',
     meta: { auth: true, name: 'MealLanguages' },
     component: MealLanguages
   },
   {
-    path: 'extra/meal/:id',
+    path: 'admins/extra/meal/:id',
     name: prop + '.extraMeal',
     meta: { auth: true, name: 'ExtraMeal' },
     component: ExtraMeal
   },
   {
-    path: 'generate/QR',
+    path: 'admins/generate/QR',
     name: prop + '.QR',
     meta: { auth: true, name: 'QR' },
     component: QR
   },
+  //end owner
+  //admins
   {
     path: 'categories',
-    name: prop + '.categories',
-    meta: { auth: true, name: 'Categories' },
-    component: Categories
+    name: prop + '.admins.categories',
+    meta: { auth: true, name: 'CategoriesAdmins' },
+    component: CategoriesAdmins
+  },
+  {
+    path: 'category/:id',
+    name: prop + '.admins.category',
+    meta: { auth: true, name: 'CategoryAdmins' },
+    component: CategoryAdmins
+  },
+  {
+    path: 'meals',
+    name: prop + '.admins.meals',
+    meta: { auth: true, name: 'MealsAdmins' },
+    component: MealsAdmins
+  },
+  {
+    path: 'meal/:id',
+    name: prop + '.admins.meal',
+    meta: { auth: true, name: 'MealLanguagesAdmins' },
+    component: MealLanguagesAdmins
+  },
+  {
+    path: 'extra/meal/:id',
+    name: prop + '.admins.extraMeal',
+    meta: { auth: true, name: 'ExtraMealAdmins' },
+    component: ExtraMealAdmins
+  },
+  {
+    path: 'generate/QR',
+    name: prop + '.admins.QR',
+    meta: { auth: true, name: 'QRAdmins' },
+    component: QRAdmins
   }
+  //end admins
 ]
 
 const authChildRoutes = (prop) => [

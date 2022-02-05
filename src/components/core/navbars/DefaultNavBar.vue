@@ -10,7 +10,7 @@
           <div class="iq-navbar-logo d-flex justify-content-between">
             <router-link :to="homeURL" class="header-logo">
               <img :src="logo" class="img-fluid rounded-normal" alt="logo" />
-              <span class="text-primary text-uppercase">VODU</span>
+              <span class="text-primary text-uppercase">Restaurant</span>
             </router-link>
           </div>
         </div>

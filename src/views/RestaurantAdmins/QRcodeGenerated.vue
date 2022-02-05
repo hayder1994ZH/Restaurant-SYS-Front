@@ -18,34 +18,9 @@
               </div> -->
               <!-- OUTPUT -->
                 <form action="" id="form">
-                  <div class="mb-3">
-                    <label style="color: red;float: left;"><span style="color: red">* </span>Restaurant Domain</label>
-                    <b-form-input
-                      v-model="restaurantPath"
-                      placeholder="Enter Your Restaurant Domain"
-                          required
-
-                    ></b-form-input>
-                  </div>
                   <label for="input-text" style="display: none;">Enter some text below to generate QR code:</label>
-                    <input type="text" style="display: none;" class="form-control" placeholder="Enter any text" name="input-text" required autocomplete="off" id="input-text" oninput="setCustomValidity('')">
+                    <input type="text"  v-model="fullPath" class="form-control" placeholder="Enter any text" name="input-text" required autocomplete="off" id="input-text" oninput="setCustomValidity('')">
                   <div class="text-center">
-                    
-                    <b-col>
-                      <b-form-group
-                        id="input-group-3"
-                        label="Choose Restaurant:"
-                        label-for="input-3"
-                      >
-                        <b-form-select
-                          id="input-3"
-                          @change="onChange()"
-                          v-model="restaurantModels"
-                          :options="restaurantName"
-                          required
-                        ></b-form-select>
-                      </b-form-group>
-                    </b-col>
                   <button type="submit" class="btn btn-primary mt-3 align-center qr-coder-submit">Submit</button>
                   </div>
                 </form>
@@ -56,16 +31,25 @@
                     <img id="qr-code" src="" alt="" class="mx-auto d-block image-qrcoder">
                     <canvas id="img-canvas" class="d-none" width="150" height="150"></canvas>
                   </div>
+                </section>
+                
                   <div class="d-none export-div justify-content-around"   id="result">
                     <p id="qr-code-for" style="display: none;" class="mr-auto"></p>
-                    <a type="button" class="btn btn-primary export-qrcode" id="download">
+                    <a type="button" class="btn btn-primary"  style="
+                    color: white;
+                    width: 12rem;
+                    font-size: 1.2rem;" id="download">
                       Export
                     </a>
-                    <a type="button" @click="print" class="btn btn-primary export-qrcode" id="download">
+                    <a type="button" @click="print" 
+                    class="btn btn-primary"  style="
+                    color: white;
+                    width: 12rem;
+                    font-size: 1.2rem;"
+                    id="download">
                       Print
                     </a>
                   </div>
-                </section>
                 <!-- <footer class="container-fluid text-center">
                   <p>Created using <a href="https://quickchart.io/" target="_blank">QuickChart API</a></p>
                 </footer> -->
@@ -83,6 +67,7 @@ export default {
   name: 'AgeRange',
   components: {  },
   created () {
+    this.checkRule()
     this.getRestaurants()
   },
   mounted () {
@@ -165,29 +150,31 @@ export default {
     return {
       restaurantPath:'',
       restaurantModels:'',
+      fullPath: null,
+      checkUserRule:'',
+      checkUserUid:'',
       imageName: '',
       restaurantName:[]
     }
   },
   methods: {
-    onChange(){
-      document.getElementById('input-text').value = this.restaurantPath + this.restaurantModels
+    checkRule(){
+      this.checkUserRule = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).user_name
+      this.checkUserUid = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).uid
+      if(this.checkUserRule === 'owner' && this.checkUserUid === null){
+        this.$router.push({ name: 'dashboard.home-1' })
+      }
     },
     async print () {
       // Pass the element id here
       await this.$htmlToPaper('printMe');
     },
     getRestaurants () {
-      this.axios
-        .get(
-          `restaurant?take=1000&skip=0`
-        )
-        .then((res) => {
-          res.data.items.forEach((item) => {
-            this.restaurantName.push({ text: item.name, value: item.uid })
-          })
-        })
-        .catch(() => {})
+      this.fullPath = `http://localhost:8000/resturant/${this.checkUserUid}`
     }
   }
 }
@@ -231,6 +218,7 @@ export default {
     font-size: 1.2rem;
 }
 .export-qrcode{
+    color: white;
     width: 12rem;
     font-size: 1.2rem;
 }

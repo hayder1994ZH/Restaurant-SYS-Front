@@ -6,42 +6,64 @@
         class="list-unstyled components"
         style="height: 41rem; background: white"
       >
-        <li aria-expanded="false">
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
           <router-link exact :to="{ name: 'dashboard.home-1' }" class="d-flex">
             <i class="fas fa-suitcase iq-arrow-left icon-block"></i>
             <a class="a-font" href="#">Dashboard</a>
           </router-link>
         </li>
-        <li aria-expanded="false">
+      <!-- owner menu -->
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
           <router-link exact :to="{ name: 'dashboard.users' }" class="d-flex">
             <i class="fas fa-user iq-arrow-left icon-block"></i>
             <a class="a-font" href="#">Users</a>
           </router-link>
         </li>
-        <li aria-expanded="false">
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
           <router-link exact :to="{ name: 'dashboard.meals' }" class="d-flex">
             <i class="fas fa-utensils"></i>
             <a class="a-font" href="#">Meals</a>
           </router-link>
         </li>
-        <li aria-expanded="false">
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
           <router-link exact :to="{ name: 'dashboard.restaurant' }" class="d-flex">
             <i class="fas fa-utensils"></i>
             <a class="a-font" href="#">Restaurant</a>
           </router-link>
         </li>
-        <li aria-expanded="false">
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
           <router-link exact :to="{ name: 'dashboard.categories' }" class="d-flex">
             <i class="fas fa-compass"></i>
             <a class="a-font" href="#">Categories</a>
           </router-link>
         </li>
-        <li aria-expanded="false">
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
           <router-link exact :to="{ name: 'dashboard.QR' }" class="d-flex">
             <i class="fas fa-qrcode"></i>
             <a class="a-font" href="#">Generate QR</a>
           </router-link>
         </li>
+        <!-- end owner menu -->
+        <!-- admin -->
+        <li aria-expanded="false" v-if="rule_name === 'admin'">
+          <router-link exact :to="{ name: 'dashboard.admins.meals' }" class="d-flex">
+            <i class="fas fa-utensils"></i>
+            <a class="a-font" href="#">Meals</a>
+          </router-link>
+        </li>
+        <li aria-expanded="false" v-if="rule_name === 'admin'">
+          <router-link exact :to="{ name: 'dashboard.admins.categories' }" class="d-flex">
+            <i class="fas fa-compass"></i>
+            <a class="a-font" href="#">Categories</a>
+          </router-link>
+        </li>
+        <li aria-expanded="false" v-if="rule_name === 'admin'">
+          <router-link exact :to="{ name: 'dashboard.admins.QR' }" class="d-flex">
+            <i class="fas fa-qrcode"></i>
+            <a class="a-font" href="#">Generate QR</a>
+          </router-link>
+        </li>
+        <!-- end admin menu -->
         <li aria-expanded="false">
           <router-link exact :to="{ name: 'auth1.sign-in1' }" class="d-flex">
             <i class="fas fa-sign-out-alt icon-block"></i>
@@ -68,6 +90,8 @@ export default {
   data () {
     return {
       rule_id: null,
+      uid: null,
+      rule_name: null,
       itemsd: [
         {
           class_name: '',
@@ -96,6 +120,12 @@ export default {
     this.rule_id = this.$jwt.decode(
       localStorage.getItem('access_token')
     ).user_id
+    this.rule_name = this.$jwt.decode(
+      localStorage.getItem('access_token')
+    ).user_name
+    this.uid = this.$jwt.decode(
+      localStorage.getItem('access_token')
+    ).uid
   },
   methods: {
     activeLink (item) {
