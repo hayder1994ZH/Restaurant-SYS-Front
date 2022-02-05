@@ -11,7 +11,7 @@
           Add New Language
         </button>
         <br />
-        <!-- add category -->
+        <!-- add meal languages -->
         <b-modal id="add" hide-footer>
             <div class="mb-3">
             <label><span style="color: red">* </span>title</label>
@@ -43,15 +43,6 @@
               </b-col>
             <div class="form-group submit-form">
             <button
-            type="button"
-            class="btn btn-secondary"
-            id="close"
-            @click="$bvModal.hide('add')"
-            data-dismiss="modal"
-            >
-            Close
-            </button>
-            <button
             class="btn btn-primary submit-button"
             type="submit"
             @click="create"
@@ -60,8 +51,8 @@
             </button>
           </div>
         </b-modal>
-        <!-- end of add category -->
-        <!-- edit category -->
+        <!-- end of add meal languages -->
+        <!-- edit meal languages -->
         <b-modal id="update" hide-footer>
             <div class="mb-3">
             <label><span style="color: red">* </span>title</label>
@@ -93,14 +84,6 @@
               </b-col>
           <div class="form-group submit-form">
             <button
-              type="button"
-              class="btn btn-secondary"
-              id="close"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
               class="btn btn-primary submit-button"
               type="submit"
               @click="update"
@@ -109,7 +92,7 @@
             </button>
           </div>
         </b-modal>
-        <!-- end of edit category -->
+        <!-- end of edit meal languages -->
         <!-- delete modal -->
         <div
           class="modal fade"

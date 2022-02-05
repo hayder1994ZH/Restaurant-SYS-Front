@@ -93,14 +93,6 @@
               </b-col>
           <div class="form-group submit-form">
             <button
-              type="button"
-              class="btn btn-secondary"
-              id="close"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
-            <button
               class="btn btn-primary submit-button"
               type="submit"
               @click="update"
@@ -137,14 +129,6 @@
                   هل حقا ترغب في حذف العنصر ؟
                 </h3>
                 <div class="form-group form-delete">
-                  <button
-                    type="button"
-                    class="btn btn-secondary"
-                    id="close-delete"
-                    data-dismiss="modal"
-                  >
-                    Close
-                  </button>
                   <b-button
                     variant="outline-danger"
                     class="delete-btn"

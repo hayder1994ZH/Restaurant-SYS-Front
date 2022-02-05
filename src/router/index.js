@@ -14,6 +14,7 @@ const Restaurants = () => import('../views/Users/Restaurants')//owner
 const Meals = () => import('../views/Users/Meals')//owner 
 const MealLanguages = () => import('../views/Users/MealLanguages')//owner
 const ExtraMeal = () => import('../views/Users/ExtraMeal')//owner
+const QR = () => import('../views/Users/QRcodeGenerated')//owner
 const Channels = () => import('../views/Channels/Channels')
 const Category1 = () => import('../views/Category/Categories')
 const SubCategory = () => import('../views/Category/Sub-Categories')
@@ -214,6 +215,12 @@ const childRoutes = (prop) => [
     name: prop + '.extraMeal',
     meta: { auth: true, name: 'ExtraMeal' },
     component: ExtraMeal
+  },
+  {
+    path: 'generate/QR',
+    name: prop + '.QR',
+    meta: { auth: true, name: 'QR' },
+    component: QR
   },
   {
     path: 'categories',

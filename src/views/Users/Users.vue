@@ -27,13 +27,14 @@
             ></b-input>
           </b-col>
         </b-row>
-        <!-- <button
+        <button
           type="button"
+          style="margin-top:2rem"
           class="btn btn-primary add"
           @click="$bvModal.show('addUser')"
         >
           Add User
-        </button> -->
+        </button>
         <br />
         <!-- add user -->
         <b-modal id="addUser" hide-footer>
@@ -45,7 +46,14 @@
             ></b-form-select>
           </div>
           <div class="mb-3">
-            <label><span style="color: red">* </span>User Name</label>
+            <label><span style="color: red">* </span> Choose Restaurant</label>
+            <b-form-select
+              v-model="formAdd.restaurant_id"
+              :options="restaurants"
+            ></b-form-select>
+          </div>
+          <div class="mb-3">
+            <label><span style="color: red">* </span>Full Name</label>
             <b-form-input
               v-model="formAdd.full_name"
               placeholder="Enter User Full Name"
@@ -111,7 +119,14 @@
             ></b-form-select>
           </div>
           <div class="mb-3">
-            <label><span style="color: red">* </span>User Name</label>
+            <label><span style="color: red">* </span> Choose Restaurant</label>
+            <b-form-select
+              v-model="formEdit.restaurant_id"
+              :options="restaurants"
+            ></b-form-select>
+          </div>
+          <div class="mb-3">
+            <label><span style="color: red">* </span>Full Name</label>
             <b-form-input
               v-model="formEdit.full_name"
               placeholder="Enter User Full Name"
@@ -142,7 +157,7 @@
           <div class="mb-3">
             <label><span style="color: red">* </span>User Image</label>
             <b-form-file
-              v-model="formEdit.image"
+              v-model="imageUser"
               :state="Boolean(formEdit.image)"
               placeholder="Choose a file or drop it here..."
               drop-placeholder="Drop file here..."
@@ -257,6 +272,8 @@
                 <b-th>full name</b-th>
                 <b-th>username</b-th>
                 <b-th>phone</b-th>
+                <b-th>rule name</b-th>
+                <b-th>restaurant name</b-th>
                 <b-th>image</b-th>
                 <b-th>created at</b-th>
                 <b-th>action</b-th>
@@ -265,12 +282,12 @@
                 <b-tr v-for="(item, index) in items" :key="index">
                   <b-td>{{ item.full_name }}</b-td>
                   <b-td>{{ item.username }}</b-td>
-                  <b-td>
-                    {{ item.phone }}
-                  </b-td>
+                  <b-td>{{ item.phone }}</b-td>
+                  <b-td>{{ (item.rules !== null)? item.rules.name: 'don`t have rules' }}</b-td>
+                  <b-td>{{ (item.restaurant !== null)? item.restaurant.name: 'don`t have restaurant'}}</b-td>
                   <b-td>
                     <img
-                      :src="imageShowTb(item.image)"
+                      :src="'http://localhost:8000/storage/' + item.image"
                       class="image-url"
                       data-toggle="modal"
                       data-target="#showImage"
@@ -337,6 +354,7 @@ export default {
   created () {
     this.getAllItems()
     this.getRules()
+    this.getRestaurants()
   },
   mounted () {
     core.index()
@@ -357,36 +375,16 @@ export default {
       perPage: 10,
       currentPage: 1,
       rows: 0,
-      formAdd: {
-        full_name: null,
-        email: null,
-        phone: null,
-        password: null,
-        image: null,
-        rule_id: null
-      },
-      formEdit: {
-        id: null,
-        full_name: null,
-        image: null,
-        cover_image: null,
-        gender_id: null,
-        user_id: null,
-        age_range_id: null
-      },
+      formAdd: [],
+      formEdit: [],
       formEditUser: [],
+      imageUser: '',
       imageShow: '',
-      videoShow: '',
       items: [],
-      rules: [{ text: 'Choose user rule', value: null }],
+      rules: [],
+      restaurants: [],
       id: null,
-      genders: [{ text: 'choose gender', value: null }],
-      ages: [{ text: 'choose age', value: null }],
       users: [{ text: 'choose user', value: null }],
-      token: null,
-      gender_id: null,
-      age_range_id: null,
-      isAgeReady: false,
       count: 0
     }
   },
@@ -395,7 +393,7 @@ export default {
       this.id = id
     },
     imageUrl (image) {
-      this.imageShow = image
+      this.imageShow = 'http://localhost:8000/storage/' + image
     },
     imageShowTb (image) {
      return this.imageShow = 'http://localhost:8000/storage/' + image
@@ -413,12 +411,21 @@ export default {
         })
       })
     },
+    getRestaurants () {
+      this.axios.get('restaurant?take=10000').then((res) => {
+        res.data.items.forEach((restaurant) => {
+          this.restaurants.push({
+            text: restaurant.name,
+            value: restaurant.id
+          })
+        })
+      })
+    },
     editPopup (item) {
       this.formEdit = item
       this.$bvModal.show('updateUser')
     },
     async createUser () {
-      this.loader = true
       let data = new FormData()
       if (this.addValidater().status === 400) {
         this.$swal('خطأ في الادخال', this.addValidater().message, 'error')
@@ -429,6 +436,8 @@ export default {
         data.append('password', this.formAdd.password)
         data.append('image', this.formAdd.image)
         data.append('rule_id', this.formAdd.rule_id)
+        data.append('restaurant_id', this.formAdd.restaurant_id)
+        this.loader = true
         await this.axios
           .post('user', data)
           .then(() => {
@@ -442,7 +451,6 @@ export default {
       }
     },
     async updateUser () {
-      this.loader = true
       let data = new FormData()
       this.editValidater()
       Object.keys(this.formEditUser).forEach((key) => {
@@ -450,12 +458,17 @@ export default {
           data.append(key, this.formEditUser[key])
         }
       })
+      if(this.imageUser){
+        data.append('image', this.imageUser)
+      }
       data.append('_method', 'PUT')
+      this.loader = true
       await this.axios
         .post(`user/${this.formEdit.id}`, data)
         .then(() => {
           this.getAllItems()
           this.$bvModal.hide('updateUser')
+          this.imageUser =null
           this.loader = false
           this.$swal('تم تعديل معلومات المستخدم بنجاح', '', 'success')
         })
@@ -477,7 +490,9 @@ export default {
           this.rows = res.data.totalCount
           this.loader = false 
         })
-        .catch(() => {})
+        .catch(() => {
+          this.loader = false 
+        })
     },
     deleteItem () {
       this.loader = true
@@ -489,6 +504,7 @@ export default {
           this.loader = false
         })
         .catch((res) => {
+          this.loader = false
           if (res.response.status === 404) {
             this.$swal('العنصر غير موجود', '', 'error')
           }
@@ -503,6 +519,11 @@ export default {
       if (!this.formAdd.rule_id) {
         dataError.status = 400
         dataError.message = 'يرجى اختيار نوع المستخدم'
+        return dataError
+      }
+      if (!this.formAdd.restaurant_id) {
+        dataError.status = 400
+        dataError.message = 'يرجى اختيار المطعم'
         return dataError
       }
       if (!this.formAdd.full_name) {
@@ -533,6 +554,9 @@ export default {
       if (this.formEdit.rule_id) {
         this.formEditUser.rule_id = this.formEdit.rule_id
       }
+      if (this.formEdit.restaurant_id) {
+        this.formEditUser.restaurant_id = this.formEdit.restaurant_id
+      }
       if (this.formEdit.full_name) {
         this.formEditUser.full_name = this.formEdit.full_name
       }
@@ -544,9 +568,6 @@ export default {
       }
       if (this.formEdit.password) {
         this.formEditUser.password = this.formEdit.password
-      }
-      if (this.formEdit.image) {
-        this.formEditUser.image = this.formEdit.image
       }
     }
   }

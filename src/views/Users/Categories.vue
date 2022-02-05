@@ -84,15 +84,6 @@
             </div>
             <div class="form-group submit-form">
             <button
-            type="button"
-            class="btn btn-secondary"
-            id="close"
-            @click="$bvModal.hide('add')"
-            data-dismiss="modal"
-            >
-            Close
-            </button>
-            <button
             class="btn btn-primary submit-button"
             type="submit"
             @click="create"
@@ -128,14 +119,6 @@
             ></b-form-file>
           </div>
           <div class="form-group submit-form">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              id="close"
-              data-dismiss="modal"
-            >
-              Close
-            </button>
             <button
               class="btn btn-primary submit-button"
               type="submit"
