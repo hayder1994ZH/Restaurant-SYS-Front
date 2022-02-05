@@ -20,25 +20,25 @@
         </li>
         <li aria-expanded="false">
           <router-link exact :to="{ name: 'dashboard.meals' }" class="d-flex">
-            <i class="fas fa-user iq-arrow-left icon-block"></i>
+            <i class="fas fa-utensils"></i>
             <a class="a-font" href="#">Meals</a>
           </router-link>
         </li>
         <li aria-expanded="false">
           <router-link exact :to="{ name: 'dashboard.restaurant' }" class="d-flex">
-            <i class="fas fa-user iq-arrow-left icon-block"></i>
+            <i class="fas fa-utensils"></i>
             <a class="a-font" href="#">Restaurant</a>
           </router-link>
         </li>
         <li aria-expanded="false">
           <router-link exact :to="{ name: 'dashboard.categories' }" class="d-flex">
-            <i class="fas fa-user iq-arrow-left icon-block"></i>
+            <i class="fas fa-compass"></i>
             <a class="a-font" href="#">Categories</a>
           </router-link>
         </li>
         <li aria-expanded="false">
           <router-link exact :to="{ name: 'dashboard.QR' }" class="d-flex">
-            <i class="fas fa-user iq-arrow-left icon-block"></i>
+            <i class="fas fa-qrcode"></i>
             <a class="a-font" href="#">Generate QR</a>
           </router-link>
         </li>
