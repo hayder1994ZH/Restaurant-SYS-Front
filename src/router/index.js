@@ -23,6 +23,7 @@ const CategoryAdmins = () => import('../views/RestaurantAdmins/Category')
 const MealsAdmins = () => import('../views/RestaurantAdmins/Meals') 
 const MealLanguagesAdmins = () => import('../views/RestaurantAdmins/MealLanguages')
 const ExtraMealAdmins = () => import('../views/RestaurantAdmins/ExtraMeal')
+const Slider = () => import('../views/RestaurantAdmins/Slider')
 const QRAdmins = () => import('../views/RestaurantAdmins/QRcodeGenerated')
 //end admins route
 const Channels = () => import('../views/Channels/Channels')
@@ -276,6 +277,12 @@ const childRoutes = (prop) => [
     name: prop + '.admins.QR',
     meta: { auth: true, name: 'QRAdmins' },
     component: QRAdmins
+  },
+  {
+    path: 'slider',
+    name: prop + '.admins.slider',
+    meta: { auth: true, name: 'Slider' },
+    component: Slider
   }
   //end admins
 ]

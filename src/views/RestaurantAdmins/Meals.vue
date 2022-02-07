@@ -69,20 +69,6 @@
             <b-col>
               <b-form-group
                 id="input-group-3"
-                label="Choose Restaurant:"
-                label-for="input-3"
-              >
-                <b-form-select
-                  id="input-3"
-                  v-model="formAdd.restaurant_id"
-                  :options="resturantModels"
-                  required
-                ></b-form-select>
-              </b-form-group>
-            </b-col>
-            <b-col>
-              <b-form-group
-                id="input-group-3"
                 label="Choose Language Name :"
                 label-for="input-3"
               >
@@ -97,7 +83,7 @@
             <b-col>
               <b-form-group
                 id="input-group-3"
-                label="Choose Language Name :"
+                label="Choose Categories Title :"
                 label-for="input-3"
               >
                 <b-form-select
@@ -370,7 +356,6 @@ export default {
     this.checkRule()
     this.getAllItems()
     this.getLanguages()
-    this.getRestaurants()
     this.getCategories()
 },
   mounted () {
@@ -401,18 +386,10 @@ export default {
       formEdit: [],
       formEditRestaurant: [],
       imageShow: '',
-      videoShow: '',
       items: [],
       rules: [{ text: 'Choose user rule', value: null }],
       id: null,
-      genders: [{ text: 'choose gender', value: null }],
-      ages: [{ text: 'choose age', value: null }],
-      users: [{ text: 'choose user', value: null }],
-      token: null,
-      gender_id: null,
-      age_range_id: null,
-      isAgeReady: false,
-      count: 0
+      restaurant_ID: null,
     }
   },
   methods: {
@@ -423,6 +400,9 @@ export default {
       this.checkUserUid = this.$jwt.decode(
         localStorage.getItem('access_token')
       ).uid
+      this.restaurant_ID = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).restaurant_id
       if(this.checkUserRule === 'owner' && this.checkUserUid === null){
         this.$router.push({ name: 'dashboard.home-1' })
       }
@@ -451,7 +431,7 @@ export default {
         data.append('title', this.formAdd.title)
         data.append('description', this.formAdd.description)
         data.append('lang_id', this.formAdd.lang_id)
-        data.append('restaurant_id', this.formAdd.restaurant_id)
+        data.append('restaurant_id', this.restaurant_ID)
         data.append('category_id', this.formAdd.category_id)
         data.append('price', this.formAdd.price)
         data.append('currency', this.formAdd.currency)
@@ -515,18 +495,6 @@ export default {
           this.loader = false 
         })
     },
-    getRestaurants () {
-      this.axios
-        .get(
-          `restaurant?take=1000&skip=0`
-        )
-        .then((res) => {
-          res.data.items.forEach((item) => {
-            this.resturantModels.push({ text: item.name, value: item.id })
-          })
-        })
-        .catch(() => {})
-    },
     getCategories () {
       this.axios
         .get(
@@ -581,11 +549,6 @@ export default {
       if (!this.formAdd.description) {
         dataError.status = 400
         dataError.message = 'يرجى اضافة تفاصيل '
-        return dataError
-      }
-      if (!this.formAdd.restaurant_id) {
-        dataError.status = 400
-        dataError.message = 'يرجى اختيار المطعم '
         return dataError
       }
       if (!this.formAdd.lang_id) {
