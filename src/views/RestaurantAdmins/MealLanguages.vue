@@ -268,6 +268,7 @@ export default {
       searchByTitle: '',
       checkUserRule: '',
       checkUserUid: '',
+      restaurant_ID: null,
       loader: false,
       perPage: 10,
       currentPage: 1,
@@ -287,6 +288,9 @@ export default {
       this.checkUserUid = this.$jwt.decode(
         localStorage.getItem('access_token')
       ).uid
+      this.restaurant_ID = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).restaurant_id 
       if(this.checkUserRule === 'owner' && this.checkUserUid === null){
         this.$router.push({ name: 'dashboard.home-1' })
       }
@@ -373,11 +377,11 @@ export default {
     getLanguages () {
       this.axios
         .get(
-          `language?take=1000&skip=0`
+          `show/restaurant/language/${this.restaurant_ID}`
         )
         .then((res) => {
-          res.data.items.forEach((item) => {
-            this.languages.push({ text: item.name, value: item.id })
+          res.data.forEach((item) => {
+            this.languages.push({ text: item.lang.name, value: item.id })
           })
         })
         .catch(() => {})

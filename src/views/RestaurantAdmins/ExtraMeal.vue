@@ -267,7 +267,7 @@ export default {
             .then(() => {
                 this.getAllItems()
                 this.loader = false
-                this.$swal(' تم اضافة المستخدم بنجاح', 'تم نجاح العملية', 'success')
+                this.$swal(' تم اضافة وجبة اضافية بنجاح', 'تم نجاح العملية', 'success')
             })
             .catch((res) => {
                 this.loader = false
@@ -287,7 +287,7 @@ export default {
             this.getAllItems()
             this.$bvModal.hide('update')
             this.loader = false
-            this.$swal('تم تعديل معلومات المستخدم بنجاح', '', 'success')
+            this.$swal('تم تعديل الوجبة الاضافية بنجاح', '', 'success')
         })
         .catch((res) => {
             this.loader = false

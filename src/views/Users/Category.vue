@@ -374,11 +374,11 @@ export default {
     getLanguages () {
       this.axios
         .get(
-          `language?take=1000&skip=0`
+          `show/restaurant/language/${this.$route.params.id}`
         )
         .then((res) => {
-          res.data.items.forEach((item) => {
-            this.languages.push({ text: item.name, value: item.id })
+          res.data.forEach((item) => {
+            this.languages.push({ text: item.lang.name, value: item.id })
           })
         })
         .catch(() => {})

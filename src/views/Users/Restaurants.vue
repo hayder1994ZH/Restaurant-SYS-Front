@@ -208,6 +208,13 @@
                       alt
                     /> 
                   </b-td>
+                    <b-td>
+                    <router-link
+                      :to="{ name: 'dashboard.languages', params: { id: item.id } }"
+                    >
+                      languages
+                    </router-link>
+                  </b-td>
                   <b-td>{{ item.created_at }}</b-td>
                   <b-td>
                     <template>

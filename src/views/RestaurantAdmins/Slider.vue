@@ -133,7 +133,7 @@
       <b-col sm="12">
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Categories List</h4>
+            <h4 class="card-title">Slider List</h4>
           </template>
           <template v-slot:headerAction>
             <a
