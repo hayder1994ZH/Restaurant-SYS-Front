@@ -2,70 +2,25 @@
   <b-container fluid>
     <b-row>
       <b-col sm="12">
-        <b-row class="justify-content-between">
-          <b-col md="6" class="d-flex">
-            <b-input
-              class="mr-3"
-              type="search"
-              placeholder="Search By Restaurant Name"
-              v-model="searchByName"
-              @keyup.enter="getAllItems"
-            ></b-input>
-            <b-input
-              class="mr-3"
-              type="search"
-              placeholder="Search By Foot title"
-              v-model="searchByTitle"
-              @keyup.enter="getAllItems"
-            ></b-input>
-          </b-col>
-        </b-row>
         <button
           type="button"
           style="margin-top:2rem"
           class="btn btn-primary add"
           @click="$bvModal.show('add')"
         >
-          Add Meal
+          Add Slider
+        </button>
+        <button
+          type="button"
+          style="margin-top:2rem;margin-left:1rem"
+          class="btn btn-primary add"
+          @click="addToAll"
+        >
+          Add All Restaurant 
         </button>
         <br />
-        <!-- add meal -->
+        <!-- add Slider -->
         <b-modal id="add" hide-footer>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Title</label>
-            <b-form-input
-              v-model="formAdd.title"
-              placeholder="Enter Title"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Description</label>
-            <b-form-input
-              v-model="formAdd.description"
-              placeholder="Enter Description"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Currency</label>
-            <b-form-input
-              v-model="formAdd.currency"
-              placeholder="Enter Currency"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Price</label>
-            <b-form-input
-              v-model="formAdd.price"
-              placeholder="Enter Price"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Discount</label>
-            <b-form-input
-              v-model="formAdd.discount"
-              placeholder="Enter Discount"
-            ></b-form-input>
-          </div>
             <b-col>
               <b-form-group
                 id="input-group-3"
@@ -80,79 +35,33 @@
                 ></b-form-select>
               </b-form-group>
             </b-col>
-            <b-col>
-              <b-form-group
-                id="input-group-3"
-                label="Choose Language Name :"
-                label-for="input-3"
-              >
-                <b-form-select
-                  id="input-3"
-                  v-model="formAdd.lang_id"
-                  :options="languages"
-                  required
-                ></b-form-select>
-              </b-form-group>
-            </b-col>
-            <b-col>
-              <b-form-group
-                id="input-group-3"
-                label="Choose Language Name :"
-                label-for="input-3"
-              >
-                <b-form-select
-                  id="input-3"
-                  v-model="formAdd.category_id"
-                  :options="categories"
-                  required
-                ></b-form-select>
-              </b-form-group>
-            </b-col>
-            <div class="mb-3">
-            <label><span style="color: red">* </span>Image</label>
-            <b-form-file
-            v-model="formAdd.poster"
-            :state="Boolean(formAdd.poster)"
-            placeholder="Choose a image or drop it here..."
-            drop-placeholder="Drop image here..."
-            ></b-form-file>
-            </div>
             <div class="form-group submit-form">
-            <button
-            class="btn btn-primary submit-button"
-            type="submit"
-            @click="create"
-            >
-              Submit
-            </button>
-          </div>
+                <button
+                class="btn btn-primary submit-button"
+                type="submit"
+                @click="create"
+                >
+                Submit
+                </button>
+            </div>
         </b-modal>
-        <!-- end of add meal -->
-        <!-- edit meal -->
+        <!-- end of add Slider -->
+        <!-- edit Slider -->
         <b-modal id="update" hide-footer>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Name</label>
-            <b-form-input
-              v-model="formEdit.name"
-              placeholder="Enter Name"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>details</label>
-            <b-form-input
-              v-model="formEdit.details"
-              placeholder="Enter Details"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Logo</label>
-            <b-form-file
-              v-model="logo"
-              :state="Boolean(logo)"
-              placeholder="Choose a logo or drop it here..."
-              drop-placeholder="Drop logo here..."
-            ></b-form-file>
-          </div>
+            <b-col>
+              <b-form-group
+                id="input-group-3"
+                label="Choose Restaurant:"
+                label-for="input-3"
+              >
+                <b-form-select
+                  id="input-3"
+                  v-model="formEdit.restaurant_id"
+                  :options="resturantModels"
+                  required
+                ></b-form-select>
+              </b-form-group>
+            </b-col>
           <div class="form-group submit-form">
             <button
               class="btn btn-primary submit-button"
@@ -163,7 +72,7 @@
             </button>
           </div>
         </b-modal>
-        <!-- end of edit meal -->
+        <!-- end of edit Slider -->
         <!-- show image modal -->
         <div
           class="modal fade"
@@ -227,12 +136,17 @@
             </div>
           </div>
         </div>
+        <!-- show video modal -->
+        <b-modal id="videoShow">
+          <vue-core-video-player :src="videoSource"></vue-core-video-player>
+        </b-modal>
+        <!-- show video modal -->
         <!-- end delete modal -->
       </b-col>
       <b-col sm="12">
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Meals List</h4>
+            <h4 class="card-title">Slider List</h4>
           </template>
           <template v-slot:headerAction>
             <a
@@ -251,55 +165,16 @@
             </b-collapse>
             <b-table-simple responsive>
               <b-thead>
-                <b-th>title</b-th>
-                <b-th>description</b-th>
-                <b-th>restautant name</b-th>
-                <b-th>price</b-th>
-                <b-th>discount</b-th>
-                <b-th>currency</b-th>
-                <b-th>category name</b-th>
-                <b-th>image</b-th>
-                <b-th>show language</b-th>
-                <b-th>show extra meal</b-th>
+                <b-th>restaurant</b-th>
                 <b-th>created at</b-th>
                 <b-th>action</b-th>
               </b-thead>
               <b-tbody>
                 <b-tr v-for="(item, index) in items" :key="index">
-                  <b-td>{{ item.title }}</b-td>
-                  <b-td>{{ item.description }}</b-td>
                   <b-td>{{ item.restaurant.name }}</b-td>
-                  <b-td>{{ item.price }}</b-td>
-                  <b-td>{{ item.discount }}</b-td>
-                  <b-td>{{ item.currency }}</b-td>
-                  <b-td>{{ item.category.title }}</b-td>
-                   <b-td>
-                    <img
-                      :src="'http://localhost:8000/storage/' + item.poster"
-                      class="image-url"
-                      data-toggle="modal"
-                      data-target="#showImage"
-                      v-on:click="imageUrl(item.poster)"
-                      alt
-                    /> 
-                  </b-td> 
+                  <b-td>{{ item.created_at }}</b-td> 
                   <b-td>
-                    <router-link
-                      :to="{ name: 'dashboard.meal', params: { id: item.id } }"
-                    >
-                      languages
-                    </router-link>
-                  </b-td>
-                    <b-td>
-                    <router-link
-                      :to="{ name: 'dashboard.extraMeal', params: { id: item.id } }"
-                    >
-                      extra
-                    </router-link>
-                  </b-td>
-                  <b-td>{{ item.created_at }}</b-td>
-                  <b-td>
-                    <!-- <template>
+                    <template>
                       <b-button
                         class="custom-btn mr-2"
                         variant=" iq-bg-success"
@@ -308,7 +183,7 @@
                       >
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
-                    </template> -->
+                    </template>
                     <template>
                       <b-button
                         class="custom-btn mr-2"
@@ -327,7 +202,7 @@
               </b-tbody>
             </b-table-simple>
           </template>
-          <b-pagination
+          <!-- <b-pagination
             style="float: right"
             v-model="currentPage"
             :total-rows="rows"
@@ -353,7 +228,7 @@
               <b v-if="active">{{ page }}</b>
               <i v-else>{{ page }}</i>
             </template>
-          </b-pagination>
+          </b-pagination> -->
         </iq-card>
       </b-col>
     </b-row>
@@ -369,10 +244,8 @@ export default {
   created () {
     this.getAllItems()
     this.checkRule()
-    this.getLanguages()
     this.getRestaurants()
-    this.getCategories()
-  },
+},
   mounted () {
     core.index()
   },
@@ -386,24 +259,36 @@ export default {
   data () {
     return {
       logo: '',
-      categories: [],
+      meals: [],
+      typeValue:'',
+      videoSource:[],
+      
+      type: [
+        {
+          text: 'image',
+          value: 'image'
+        },
+        {
+          text: 'video',
+          value: 'video'
+        }
+      ],
       resturantModels: [],
-      languages: [],
-      searchByName: '',
-      searchByTitle: '',
+      videoShow: '',
+      fileUrl: '',
+      checkUserUid: '',
+      checkUserRule: '',
       loader: false,
-      perPage: 10,
-      currentPage: 1,
       rows: 0,
       formAdd:[],
       formEdit: [],
       formEditRestaurant: [],
       imageShow: '',
+      restaurantUid: null,
+      restaurant_ID: null,
       items: [],
       rules: [{ text: 'Choose user rule', value: null }],
       id: null,
-      checkUserRule: null,
-      checkUserUid: null,
     }
   },
   methods: {
@@ -414,12 +299,23 @@ export default {
       this.checkUserUid = this.$jwt.decode(
         localStorage.getItem('access_token')
       ).uid
-      if(this.checkUserRule === 'admin' && this.checkUserUid !== null){
+      this.restaurant_ID = this.$jwt.decode(
+        localStorage.getItem('access_token')
+      ).restaurant_id
+      if(this.checkUserRule === 'admin' && this.checkUserUid === null){
         this.$router.push({ name: 'dashboard.home-1' })
       }
     },
     deletePopup (id) {
       this.id = id
+    },
+    videoPopup (video) {
+      console.log(video)
+      this.videoSource = []
+      this.videoSource.push({
+              src: video,
+            })
+          this.$bvModal.show('videoShow')
     },
     imageUrl (image) {
       this.imageShow = 'http://localhost:8000/storage/' + image
@@ -439,20 +335,11 @@ export default {
       if (this.addValidater().status === 400) {
         this.$swal('خطأ في الادخال', this.addValidater().message, 'error')
       } else {
-        data.append('title', this.formAdd.title)
-        data.append('description', this.formAdd.description)
-        data.append('lang_id', this.formAdd.lang_id)
         data.append('restaurant_id', this.formAdd.restaurant_id)
-        data.append('category_id', this.formAdd.category_id)
-        data.append('price', this.formAdd.price)
-        data.append('currency', this.formAdd.currency)
-        if(this.formAdd.discount){
-            data.append('discount', this.formAdd.discount)
-        }
-        data.append('poster', this.formAdd.poster)
+        data.append('slider_id', this.$route.params.id)
         this.loader = true
         await this.axios
-          .post('meal', data)
+          .post('resturantSlider', data)
           .then(() => {
             this.getAllItems()
             this.loader = false
@@ -464,6 +351,20 @@ export default {
           })
       }
     },
+    addToAll () {
+      let data = new FormData()
+        data.append('slider_id', this.$route.params.id)
+        this.loader = true
+        this.axios
+          .post('add/all/restaurant/slider', data)
+          .then(() => {
+            this.getAllItems()
+            this.loader = false
+          })
+          .catch(() => {
+            this.loader = false
+          })
+    },
     async update () {
       let data = new FormData()
       this.editValidater()
@@ -472,31 +373,27 @@ export default {
           data.append(key, this.formEditRestaurant[key])
         }
       })
-      if(this.logo){
-        data.append('logo', this.logo)
-      }
-      data.append('_method', 'PUT')
-      this.loader = true
-      await this.axios
-        .post(`category/${this.formEdit.id}`, data)
-        .then(() => {
-          this.getAllItems()
-          this.$bvModal.hide('update')
-          this.loader = false
-          this.$swal('تم تعديل معلومات المستخدم بنجاح', '', 'success')
-        })
-        .catch(() => {
-          this.loader = false
-          this.$swal('حدث خطأ فني يرجى المحاولة لاحقا', '', 'erorr')
-        })
+        data.append('slider_id', this.$route.params.id)
+        data.append('_method', 'PUT')
+        this.loader = true
+        await this.axios
+            .post(`resturantSlider/${this.formEdit.id}`, data)
+            .then(() => {
+                this.getAllItems()
+                this.$bvModal.hide('update')
+                this.loader = false
+                this.$swal('تم تعديل معلومات المستخدم بنجاح', '', 'success')
+            })
+            .catch(() => {
+                this.loader = false
+                this.$swal('حدث خطأ فني يرجى المحاولة لاحقا', '', 'erorr')
+            })
     },
     getAllItems () {
       this.loader = true 
-      let pageNumber = this.currentPage - 1
-      let pageSkip = pageNumber * this.perPage
       this.axios
         .get(
-          `meal?take=${this.perPage}&skip=${pageSkip}&filter[restaurant.name]=${this.searchByName}&filter[langBody.title]=${this.searchByTitle}`
+          `all/restaurant/slider/${this.$route.params.id}?take=10`
         )
         .then((res) => {
           this.items = res.data.items
@@ -519,26 +416,14 @@ export default {
         })
         .catch(() => {})
     },
-    getCategories () {
+    getMeals () {
       this.axios
         .get(
-          `category?take=1000&skip=0`
+          `meal?take=1000&skip=0`
         )
         .then((res) => {
           res.data.items.forEach((item) => {
-            this.categories.push({ text: item.lang_body.title, value: item.id })
-          })
-        })
-        .catch(() => {})
-    },
-    getLanguages () {
-      this.axios
-        .get(
-          `language?take=1000&skip=0`
-        )
-        .then((res) => {
-          res.data.items.forEach((item) => {
-            this.languages.push({ text: item.name, value: item.id })
+            this.meals.push({ text: item.lang_body.title, value: item.id })
           })
         })
         .catch(() => {})
@@ -546,10 +431,10 @@ export default {
     deleteItem () {
       this.loader = true
       this.axios
-        .delete(`meal/${this.id}`)
+        .delete(`resturantSlider/${this.id}`)
         .then((res) => {
-          this.closeDeleteModal()
           this.getAllItems()
+          this.closeDeleteModal()
           this.loader = false
         })
         .catch((res) => {
@@ -565,44 +450,9 @@ export default {
         status: null,
         message: ''
       }
-      if (!this.formAdd.title) {
-        dataError.status = 400
-        dataError.message = 'يرجى اضافة عنوان '
-        return dataError
-      }
-      if (!this.formAdd.description) {
-        dataError.status = 400
-        dataError.message = 'يرجى اضافة تفاصيل '
-        return dataError
-      }
       if (!this.formAdd.restaurant_id) {
         dataError.status = 400
         dataError.message = 'يرجى اختيار المطعم '
-        return dataError
-      }
-      if (!this.formAdd.lang_id) {
-        dataError.status = 400
-        dataError.message = 'يرجى اختيار لغة '
-        return dataError
-      }
-      if (!this.formAdd.category_id) {
-        dataError.status = 400
-        dataError.message = 'يرجى اختيار صنف الطعام '
-        return dataError
-      }
-      if (!this.formAdd.price) {
-        dataError.status = 400
-        dataError.message = 'يرجى اضافة السعر '
-        return dataError
-      }
-      if (!this.formAdd.currency) {
-        dataError.status = 400
-        dataError.message = 'يرجى اضافة العملة '
-        return dataError
-      }
-      if (!this.formAdd.poster) {
-        dataError.status = 400
-        dataError.message = 'يرجى اضافة صورة '
         return dataError
       }
       dataError.status = 200
@@ -610,11 +460,8 @@ export default {
       return dataError
     },
     editValidater () {
-      if (this.formEdit.name) {
-        this.formEditRestaurant.name = this.formEdit.name
-      }
-      if (this.formEdit.details) {
-        this.formEditRestaurant.details = this.formEdit.details
+      if (this.formEdit.restaurant_id) {
+        this.formEditRestaurant.restaurant_id = this.formEdit.restaurant_id
       }
     }
   }

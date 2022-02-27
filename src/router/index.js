@@ -7,16 +7,20 @@ const AuthLayout = () => import('../layouts/AuthLayouts/AuthLayout')
 /* Dashboards View */
 const Dashboard1 = () => import('../views/Dashboards/Dashboard1')
 //owner route
-const Users = () => import('../views/Users/Users')//owner
-const take = () => import('../views/Users/take')//owner
-const Categories = () => import('../views/Users/Categories')//owner
-const Category = () => import('../views/Users/Category')//owner
-const Restaurants = () => import('../views/Users/Restaurants')//owner
-const Meals = () => import('../views/Users/Meals')//owner  
-const MealLanguages = () => import('../views/Users/MealLanguages')//owner
-const Languages = () => import('../views/Users/Languages')//owner
-const ExtraMeal = () => import('../views/Users/ExtraMeal')//owner
-const QR = () => import('../views/Users/QRcodeGenerated')//owner
+const Users = () => import('../views/Users/Users')
+const take = () => import('../views/Users/take')
+const Categories = () => import('../views/Users/Categories')
+const Category = () => import('../views/Users/Category')
+const Restaurants = () => import('../views/Users/Restaurants')
+const Meals = () => import('../views/Users/Meals')  
+const Slider = () => import('../views/Users/Slider')
+const RestaurantSlider = () => import('../views/Users/RestaurantSlider')
+const FoodObjects = () => import('../views/Users/FoodObjects')
+const RestaurantFood = () => import('../views/Users/FoodObjectRestaurants')
+const MealLanguages = () => import('../views/Users/MealLanguages')
+const Languages = () => import('../views/Users/Languages')
+const ExtraMeal = () => import('../views/Users/ExtraMeal')
+const QR = () => import('../views/Users/QRcodeGenerated')
 //end owner Route
 //admin Route
 const CategoriesAdmins = () => import('../views/RestaurantAdmins/Categories')
@@ -24,7 +28,6 @@ const CategoryAdmins = () => import('../views/RestaurantAdmins/Category')
 const MealsAdmins = () => import('../views/RestaurantAdmins/Meals') 
 const MealLanguagesAdmins = () => import('../views/RestaurantAdmins/MealLanguages')
 const ExtraMealAdmins = () => import('../views/RestaurantAdmins/ExtraMeal')
-const Slider = () => import('../views/RestaurantAdmins/Slider')
 const QRAdmins = () => import('../views/RestaurantAdmins/QRcodeGenerated')
 /* Authentic View */
 const SignIn = () => import('../views/AuthPages/Default/SignIn')
@@ -131,6 +134,30 @@ const childRoutes = (prop) => [
     component: ExtraMeal
   },
   {
+    path: 'slider',
+    name: prop + '.slider',
+    meta: { auth: true, name: 'Slider' },
+    component: Slider
+  },
+  {
+    path: 'food/bjects',
+    name: prop + '.FoodObjects',
+    meta: { auth: true, name: 'FoodObjects' },
+    component: FoodObjects
+  },
+  {
+    path: 'food/restaurant/:id',
+    name: prop + '.resturantFood',
+    meta: { auth: true, name: 'RestaurantFood' },
+    component: RestaurantFood
+  },
+  {
+    path: 'slider/resturant/:id',
+    name: prop + '.resturantSlider',
+    meta: { auth: true, name: 'RestaurantSlider' },
+    component: RestaurantSlider
+  },
+  {
     path: 'admins/generate/QR',
     name: prop + '.QR',
     meta: { auth: true, name: 'QR' },
@@ -186,12 +213,6 @@ const childRoutes = (prop) => [
     meta: { auth: true, name: 'QRAdmins' },
     component: QRAdmins
   },
-  {
-    path: 'slider',
-    name: prop + '.admins.slider',
-    meta: { auth: true, name: 'Slider' },
-    component: Slider
-  }
   //end admins
 ]
 

@@ -20,6 +20,18 @@
           </router-link>
         </li>
         <li aria-expanded="false" v-if="rule_name === 'owner'">
+          <router-link exact :to="{ name: 'dashboard.slider' }" class="d-flex">
+            <i class="fas fa-sliders-h"></i>
+            <a class="a-font" href="#">Slider</a>
+          </router-link>
+        </li>
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
+          <router-link exact :to="{ name: 'dashboard.FoodObjects' }" class="d-flex">
+            <i class="fas fa-sliders-h"></i>
+            <a class="a-font" href="#">Food Objects</a>
+          </router-link>
+        </li>
+        <li aria-expanded="false" v-if="rule_name === 'owner'">
           <router-link exact :to="{ name: 'dashboard.meals' }" class="d-flex">
             <i class="fas fa-utensils"></i>
             <a class="a-font" href="#">Meals</a>
@@ -49,12 +61,6 @@
           <router-link exact :to="{ name: 'dashboard.admins.meals' }" class="d-flex">
             <i class="fas fa-utensils"></i>
             <a class="a-font" href="#">Meals</a>
-          </router-link>
-        </li>
-        <li aria-expanded="false" v-if="rule_name === 'admin'">
-          <router-link exact :to="{ name: 'dashboard.admins.slider' }" class="d-flex">
-            <i class="fas fa-sliders-h"></i>
-            <a class="a-font" href="#">Slider</a>
           </router-link>
         </li>
         <li aria-expanded="false" v-if="rule_name === 'admin'">

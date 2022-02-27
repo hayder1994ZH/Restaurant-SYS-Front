@@ -8,25 +8,41 @@
           class="btn btn-primary add"
           @click="$bvModal.show('add')"
         >
-          Add Slider
+          Add Food
         </button>
         <br />
-        <!-- add category -->
+        <!-- add Slider -->
         <b-modal id="add" hide-footer>
-            <b-col>
-              <b-form-group
-                id="input-group-3"
-                label="Choose Meals Title :"
-                label-for="input-3"
-              >
-                <b-form-select
-                  id="input-3"
-                  v-model="formAdd.meal_id"
-                  :options="meals"
-                  required
-                ></b-form-select>
-              </b-form-group>
-            </b-col>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>Logo :</label>
+              <b-form-file
+              v-model="formAdd.logo"
+              :state="Boolean(formAdd.logo)"
+              placeholder="Choose a logo or drop it here..."
+              drop-placeholder="Drop image here..."
+              ></b-form-file>
+            </div>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>Name Company :</label>
+              <b-form-input
+                v-model="formAdd.name"
+                placeholder="Enter Url"
+              ></b-form-input>
+            </div>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>IOS Url :</label>
+              <b-form-input
+                v-model="formAdd.ios_url"
+                placeholder="Enter Url"
+              ></b-form-input>
+            </div>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>Android Url :</label>
+              <b-form-input
+                v-model="formAdd.android_url"
+                placeholder="Enter Url"
+              ></b-form-input>
+            </div>
             <div class="form-group submit-form">
             <button
             class="btn btn-primary submit-button"
@@ -37,23 +53,39 @@
             </button>
           </div>
         </b-modal>
-        <!-- end of add category -->
-        <!-- edit category -->
+        <!-- end of add Slider -->
+        <!-- edit Slider -->
         <b-modal id="update" hide-footer>
-            <b-col>
-              <b-form-group
-                id="input-group-3"
-                label="Choose Language Name :"
-                label-for="input-3"
-              >
-                <b-form-select
-                  id="input-3"
-                  v-model="formEdit.meal_id"
-                  :options="meals"
-                  required
-                ></b-form-select>
-              </b-form-group>
-            </b-col>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>Logo :</label>
+              <b-form-file
+              v-model="logoUrl"
+              :state="Boolean(formEdit.logo)"
+              placeholder="Choose a logo or drop it here..."
+              drop-placeholder="Drop image here..."
+              ></b-form-file>
+            </div>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>Name Company :</label>
+              <b-form-input
+                v-model="formEdit.name"
+                placeholder="Enter Url"
+              ></b-form-input>
+            </div>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>IOS Url :</label>
+              <b-form-input
+                v-model="formEdit.ios_url"
+                placeholder="Enter Url"
+              ></b-form-input>
+            </div>
+            <div class="mb-3">
+              <label><span style="color: red">* </span>Android Url :</label>
+              <b-form-input
+                v-model="formEdit.android_url"
+                placeholder="Enter Url"
+              ></b-form-input>
+            </div>
           <div class="form-group submit-form">
             <button
               class="btn btn-primary submit-button"
@@ -64,7 +96,7 @@
             </button>
           </div>
         </b-modal>
-        <!-- end of edit category -->
+        <!-- end of edit Slider -->
         <!-- show image modal -->
         <div
           class="modal fade"
@@ -128,12 +160,17 @@
             </div>
           </div>
         </div>
+        <!-- show video modal -->
+        <b-modal id="videoShow">
+          <vue-core-video-player :src="videoSource"></vue-core-video-player>
+        </b-modal>
+        <!-- show video modal -->
         <!-- end delete modal -->
       </b-col>
       <b-col sm="12">
         <iq-card>
           <template v-slot:headerTitle>
-            <h4 class="card-title">Slider List</h4>
+            <h4 class="card-title">Food Objects List</h4>
           </template>
           <template v-slot:headerAction>
             <a
@@ -152,29 +189,36 @@
             </b-collapse>
             <b-table-simple responsive>
               <b-thead>
-                <b-th>title</b-th>
-                <b-th>description</b-th>
-                <b-th>restaurant name</b-th>
-                <b-th>category image</b-th>
-                <b-th>created at</b-th>
-                <b-th>action</b-th>
+                <b-th>Name</b-th>
+                <b-th>IOS Url</b-th>
+                <b-th>Android Url</b-th>
+                <b-th>Logo</b-th>
+                <b-th>Restaurant</b-th>
+                <b-th>Created at</b-th>
+                <b-th>Action</b-th>
               </b-thead>
               <b-tbody>
                 <b-tr v-for="(item, index) in items" :key="index">
-                  <b-td>
-                    {{ item.meal.lang_body.title }}
-                  </b-td>
-                  <b-td>{{ item.meal.lang_body.description }}</b-td>
-                   <b-td>{{ item.restaurant.name }}</b-td>
-                   <b-td>
+                  
+                  <b-td>{{ item.name }}</b-td>
+                  <b-td>{{ item.ios_url }}</b-td>
+                  <b-td>{{ item.android_url }}</b-td>
+                  <b-td style="text-align: center;">
                     <img
-                      :src="'http://localhost:8000/storage/' + item.meal.poster"
+                      :src="'http://localhost:8000/storage/' + item.logo"
                       class="image-url"
                       data-toggle="modal"
                       data-target="#showImage"
-                      v-on:click="imageUrl(item.meal.poster)"
+                      v-on:click="imageUrl(item.logo)"
                       alt
-                    /> 
+                    />
+                  </b-td>
+                  <b-td>
+                    <router-link
+                      :to="{ name: 'dashboard.resturantFood', params: { id: item.id } }"
+                    >
+                      restaurants
+                    </router-link>
                   </b-td>
                   <b-td>{{ item.created_at }}</b-td> 
                   <b-td>
@@ -206,7 +250,7 @@
               </b-tbody>
             </b-table-simple>
           </template>
-          <b-pagination
+          <!-- <b-pagination
             style="float: right"
             v-model="currentPage"
             :total-rows="rows"
@@ -232,7 +276,7 @@
               <b v-if="active">{{ page }}</b>
               <i v-else>{{ page }}</i>
             </template>
-          </b-pagination>
+          </b-pagination> -->
         </iq-card>
       </b-col>
     </b-row>
@@ -265,6 +309,21 @@ export default {
       logo: '',
       resturantModels: [],
       meals: [],
+      typeValue:'',
+      videoSource:[],
+      
+      type: [
+        {
+          text: 'image',
+          value: 'image'
+        },
+        {
+          text: 'video',
+          value: 'video'
+        }
+      ],
+      videoShow: '',
+      logoUrl: '',
       checkUserUid: '',
       checkUserRule: '',
       loader: false,
@@ -291,12 +350,20 @@ export default {
       this.restaurant_ID = this.$jwt.decode(
         localStorage.getItem('access_token')
       ).restaurant_id
-      if(this.checkUserRule === 'owner' && this.checkUserUid === null){
+      if(this.checkUserRule === 'admin' && this.checkUserUid === null){
         this.$router.push({ name: 'dashboard.home-1' })
       }
     },
     deletePopup (id) {
       this.id = id
+    },
+    videoPopup (video) {
+      console.log(video)
+      this.videoSource = []
+      this.videoSource.push({
+              src: video,
+            })
+          this.$bvModal.show('videoShow')
     },
     imageUrl (image) {
       this.imageShow = 'http://localhost:8000/storage/' + image
@@ -316,11 +383,13 @@ export default {
       if (this.addValidater().status === 400) {
         this.$swal('خطأ في الادخال', this.addValidater().message, 'error')
       } else {
-        data.append('restaurant_id', this.restaurant_ID)
-        data.append('meal_id', this.formAdd.meal_id)
+        data.append('logo', this.formAdd.logo)
+        data.append('ios_url', this.formAdd.ios_url)
+        data.append('android_url', this.formAdd.android_url)
+        data.append('name', this.formAdd.name)
         this.loader = true
         await this.axios
-          .post('slider', data)
+          .post('food/objects', data)
           .then(() => {
             this.getAllItems()
             this.loader = false
@@ -340,12 +409,13 @@ export default {
           data.append(key, this.formEditRestaurant[key])
         }
       })
-        data.append('restaurant_id', this.restaurant_ID)
-        data.append('meal_id', this.formEditRestaurant.meal_id)
+        if(this.logoUrl){
+          data.append('logo', this.logoUrl)
+        }
         data.append('_method', 'PUT')
         this.loader = true
         await this.axios
-            .post(`slider/${this.formEdit.id}`, data)
+            .post(`food/objects/${this.formEdit.id}`, data)
             .then(() => {
                 this.getAllItems()
                 this.$bvModal.hide('update')
@@ -361,7 +431,7 @@ export default {
       this.loader = true 
       this.axios
         .get(
-          `slider?take=10`
+          `food/objects?take=10`
         )
         .then((res) => {
           this.items = res.data.items
@@ -371,6 +441,14 @@ export default {
         .catch(() => {
           this.loader = false 
         })
+    },
+    getRestauran (index) {
+      this.axios
+      .get(`restaurant?take=100`)
+      .then((res) => {
+        this.ages[index] = res.data.items
+        this.isAgeReady = true
+      })
     },
     getMeals () {
       this.axios
@@ -387,7 +465,7 @@ export default {
     deleteItem () {
       this.loader = true
       this.axios
-        .delete(`slider/${this.id}`)
+        .delete(`food/objects/${this.id}`)
         .then((res) => {
           this.getAllItems()
           this.closeDeleteModal()
@@ -406,9 +484,24 @@ export default {
         status: null,
         message: ''
       }
-      if (!this.formAdd.meal_id) {
+      if (!this.formAdd.logo) {
         dataError.status = 400
-        dataError.message = 'يرجى اختيار الوجبة التي تود وضعها في السلايدر '
+        dataError.message = 'يرجى اختياراختيار لوكو للشركة '
+        return dataError
+      }
+      if (!this.formAdd.name) {
+        dataError.status = 400
+        dataError.message = 'يرجى اضافة اسم الشركة '
+        return dataError
+      }
+      if (!this.formAdd.ios_url) {
+        dataError.status = 400
+        dataError.message = 'يرجى اضافة رابط الايفون '
+        return dataError
+      }
+      if (!this.formAdd.android_url) {
+        dataError.status = 400
+        dataError.message = 'يرجى اضافة رابط الاندرويد '
         return dataError
       }
       dataError.status = 200
@@ -416,8 +509,14 @@ export default {
       return dataError
     },
     editValidater () {
-      if (this.formEdit.meal_id) {
-        this.formEditRestaurant.meal_id = this.formEdit.meal_id
+      if (this.formEdit.name) {
+        this.formEditRestaurant.name = this.formEdit.name
+      }
+      if (this.formEdit.ios_url) {
+        this.formEditRestaurant.ios_url = this.formEdit.ios_url
+      }
+      if (this.formEdit.android_url) {
+        this.formEditRestaurant.android_url = this.formEdit.android_url
       }
     }
   }

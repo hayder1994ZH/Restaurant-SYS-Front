@@ -88,7 +88,6 @@ export default {
       var formData = new FormData()
       formData.append('username', this.user.username)
       formData.append('password', this.user.password)
-      console.log(this.user)
       this.axios
         .post('auth/login', formData)
         .then((res) => {
@@ -104,7 +103,11 @@ export default {
         .get('profile/user')
         .then((res) => {
           localStorage.setItem('user', JSON.stringify(res.data))
-          this.$router.push({ name: 'dashboard.home-1' })
+          if(res.data.rules.name === 'admin'){
+            this.$router.push({ name: 'dashboard.admins.meals' })
+          }else{
+            this.$router.push({ name: 'dashboard.home-1' })
+          }
         })
         .catch(() => {})
     }
