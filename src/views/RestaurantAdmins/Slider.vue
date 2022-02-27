@@ -246,8 +246,8 @@ export default {
   name: 'AgeRange',
   components: { Loader },
   created () {
-    this.checkRule()
     this.getAllItems()
+    this.checkRule()
     this.getMeals()
 },
   mounted () {
@@ -358,6 +358,7 @@ export default {
             })
     },
     getAllItems () {
+      this.loader = true 
       this.axios
         .get(
           `slider?take=10`

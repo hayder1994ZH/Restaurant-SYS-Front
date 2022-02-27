@@ -247,9 +247,9 @@ export default {
   name: 'AgeRange',
   components: { Loader },
   created () {
-    this.checkRule()
-    this.getLanguages()
     this.getAllItems()
+    this.getLanguages()
+    this.checkRule()
   },
   mounted () {
     core.index()

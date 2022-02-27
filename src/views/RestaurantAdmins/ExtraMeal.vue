@@ -201,8 +201,8 @@ export default {
   name: 'AgeRange',
   components: { Loader },
   created () {
-    this.checkRule()
     this.getAllItems()
+    this.checkRule()
   },
   mounted () {
     core.index()

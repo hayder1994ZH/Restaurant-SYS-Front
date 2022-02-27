@@ -29,7 +29,7 @@
 <script>
 import Loader from '../../components/core/loader/NewLoader'
 import logo from '../../assets/images/logo.png'
-import userLogo from '../../assets/images/login/user.jpg'
+import userLogo from '../../assets/images/login/loginUser.png'
 import { core } from '../../config/pluginInit'
 import bgImage from '../../assets/images/login/login.jpg'
 export default {

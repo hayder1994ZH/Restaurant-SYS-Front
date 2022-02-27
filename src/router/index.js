@@ -8,6 +8,7 @@ const AuthLayout = () => import('../layouts/AuthLayouts/AuthLayout')
 const Dashboard1 = () => import('../views/Dashboards/Dashboard1')
 //owner route
 const Users = () => import('../views/Users/Users')//owner
+const take = () => import('../views/Users/take')//owner
 const Categories = () => import('../views/Users/Categories')//owner
 const Category = () => import('../views/Users/Category')//owner
 const Restaurants = () => import('../views/Users/Restaurants')//owner
@@ -154,6 +155,12 @@ const childRoutes = (prop) => [
     name: prop + '.admins.meals',
     meta: { auth: true, name: 'MealsAdmins' },
     component: MealsAdmins
+  },
+  {
+    path: 'take',
+    name: prop + '.take',
+    meta: { auth: true, name: 'take' },
+    component: take
   },
   {
     path: 'meal/:id',

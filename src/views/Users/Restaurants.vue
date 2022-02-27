@@ -272,8 +272,8 @@ export default {
   name: 'AgeRange',
   components: { Loader },
   created () {
-    this.checkRule()
     this.getAllItems()
+    this.checkRule()
   },
   mounted () {
     core.index()
@@ -382,6 +382,7 @@ export default {
         })
     },
     getAllItems () {
+      this.loader = true 
       let pageNumber = this.currentPage - 1
       let pageSkip = pageNumber * this.perPage
       this.axios

@@ -319,6 +319,7 @@ export default {
         .catch(() => {})
     },
     getAllItems () {
+      this.loader = true 
       this.axios
         .get(
           `show/restaurant/language/${this.restaurantId}`

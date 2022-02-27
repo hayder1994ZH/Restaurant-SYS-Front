@@ -212,19 +212,17 @@
               </b-thead>
               <b-tbody>
                 <b-tr v-for="(item, index) in items" :key="index">
-                  <b-td>
-                    {{ item.lang_body.title }}
-                  </b-td>
-                  <b-td>{{ item.lang_body.description }}</b-td>
+                  <b-td>{{ item.title }}</b-td>
+                  <b-td>{{ item.description }}</b-td>
                   <b-td>{{ item.restaurant.name }}</b-td>
-                   <b-td>
-                    <img
-                      :src="'http://localhost:8000/storage/' + item.image"
-                      class="image-url"
-                      data-toggle="modal"
-                      data-target="#showImage"
-                      v-on:click="imageUrl(item.image)"
-                      alt
+                  <b-td>
+                  <img
+                    :src="'http://localhost:8000/storage/' + item.image"
+                    class="image-url"
+                    data-toggle="modal"
+                    data-target="#showImage"
+                    v-on:click="imageUrl(item.image)"
+                    alt
                     /> 
                   </b-td> 
                     <b-td>
@@ -304,8 +302,8 @@ export default {
   name: 'AgeRange',
   components: { Loader },
   created () {
-    this.checkRule()
     this.getAllItems()
+    this.checkRule()
     this.getLanguages()
 },
   mounted () {
@@ -423,6 +421,7 @@ export default {
         })
     },
     getAllItems () {
+      this.loader = true 
       let pageNumber = this.currentPage - 1
       let pageSkip = pageNumber * this.perPage
       this.axios

@@ -53,7 +53,7 @@
               <b-col sm="6">
                 <section class="qr-coder" >
                   <div id="printMe">
-                    <img id="qr-code" src="" alt="" class="mx-auto d-block image-qrcoder">
+                    <img  style="height: 30rem;" id="qr-code" src="" alt="" class="mx-auto d-block image-qrcoder">
                     <canvas id="img-canvas" class="d-none" width="150" height="150"></canvas>
                   </div>
                   <div class="d-none export-div justify-content-around"   id="result">
@@ -237,7 +237,7 @@ export default {
 .qr-coder{
   background: #e9ecef;
   color: white;
-  height: 20rem;
+  height: 30rem;
   border-radius: 1rem;
 }
 .qr-coder-submit{

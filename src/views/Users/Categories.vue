@@ -31,6 +31,8 @@
         <br />
         <!-- add category -->
         <b-modal id="add" hide-footer>
+            <input type="file" accept="image/*" capture="camera" />
+
           <div class="mb-3">
             <label><span style="color: red">* </span>Title</label>
             <b-form-input
@@ -95,29 +97,29 @@
         <!-- end of add category -->
         <!-- edit category -->
         <b-modal id="update" hide-footer>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Name</label>
-            <b-form-input
-              v-model="formEdit.name"
-              placeholder="Enter Name"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>details</label>
-            <b-form-input
-              v-model="formEdit.details"
-              placeholder="Enter Details"
-            ></b-form-input>
-          </div>
-          <div class="mb-3">
-            <label><span style="color: red">* </span>Logo</label>
+            <b-col>
+              <b-form-group
+                id="input-group-3"
+                label="Choose Restaurant:"
+                label-for="input-3"
+              >
+                <b-form-select
+                  id="input-3"
+                  v-model="formEdit.restaurant_id"
+                  :options="resturantModels"
+                  required
+                ></b-form-select>
+              </b-form-group>
+            </b-col>
+            <div class="mb-3">
+            <label><span style="color: red">* </span>Image</label>
             <b-form-file
-              v-model="logo"
-              :state="Boolean(logo)"
-              placeholder="Choose a logo or drop it here..."
-              drop-placeholder="Drop logo here..."
+            v-model="imageCategory"
+            :state="Boolean(imageCategorye)"
+            placeholder="Choose a image or drop it here..."
+            drop-placeholder="Drop image here..."
             ></b-form-file>
-          </div>
+            </div>
           <div class="form-group submit-form">
             <button
               class="btn btn-primary submit-button"
@@ -227,9 +229,9 @@
               <b-tbody>
                 <b-tr v-for="(item, index) in items" :key="index">
                   <b-td>
-                    {{ item.lang_body.title }}
+                    {{ item.title }}
                   </b-td>
-                  <b-td>{{ item.lang_body.description }}</b-td>
+                  <b-td>{{ item.description }}</b-td>
                   <b-td>{{ item.restaurant.name }}</b-td>
                    <b-td>
                     <img
@@ -250,7 +252,7 @@
                   </b-td>
                   <b-td>{{ item.created_at }}</b-td>
                   <b-td>
-                    <!-- <template>
+                    <template>
                       <b-button
                         class="custom-btn mr-2"
                         variant=" iq-bg-success"
@@ -259,7 +261,7 @@
                       >
                         <i class="ri-ball-pen-fill m-0"></i>
                       </b-button>
-                    </template> -->
+                    </template>
                     <template>
                       <b-button
                         class="custom-btn mr-2"
@@ -336,6 +338,7 @@ export default {
   data () {
     return {
       logo: '',
+      imageCategory: '',
       resturantModels: [],
       languages: [],
       searchByName: '',
@@ -409,14 +412,11 @@ export default {
     },
     async update () {
       let data = new FormData()
-      this.editValidater()
-      Object.keys(this.formEditRestaurant).forEach((key) => {
-        if (this.formEditRestaurant[key] || this.formEditRestaurant[key] !== '') {
-          data.append(key, this.formEditRestaurant[key])
-        }
-      })
-      if(this.logo){
-        data.append('logo', this.logo)
+      if(this.imageCategory){
+        data.append('image', this.imageCategory)
+      }
+      if(this.formEdit.restaurant_id){
+        data.append('restaurant_id', this.formEdit.restaurant_id)
       }
       data.append('_method', 'PUT')
       this.loader = true
@@ -434,6 +434,7 @@ export default {
         })
     },
     getAllItems () {
+      this.loader = true 
       let pageNumber = this.currentPage - 1
       let pageSkip = pageNumber * this.perPage
       this.axios
@@ -524,14 +525,6 @@ export default {
       dataError.message = 'success'
       return dataError
     },
-    editValidater () {
-      if (this.formEdit.name) {
-        this.formEditRestaurant.name = this.formEdit.name
-      }
-      if (this.formEdit.details) {
-        this.formEditRestaurant.details = this.formEdit.details
-      }
-    }
   }
 }
 </script>
